@@ -2,7 +2,7 @@ import {
   Github,
   Linkedin,
   Twitter,
-  Instagram,
+  Facebook,
   MapPin,
   Phone,
   Mail,
@@ -26,7 +26,7 @@ const Footer = () => {
             </p>
             <div className="flex space-x-4">
               <a
-                href="https://github.com/"
+                href="https://github.com/sammiykay"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-primary transition"
@@ -34,7 +34,7 @@ const Footer = () => {
                 <Github size={20} />
               </a>
               <a
-                href="https://linkedin.com/"
+                href="https://linkedin.com/in/oke-samson"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-primary transition"
@@ -42,7 +42,7 @@ const Footer = () => {
                 <Linkedin size={20} />
               </a>
               <a
-                href="https://twitter.com/"
+                href="https://twitter.com/sammiykay"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-primary transition"
@@ -50,12 +50,12 @@ const Footer = () => {
                 <Twitter size={20} />
               </a>
               <a
-                href="https://instagram.com/"
+                href="https://facebook.com/@sammiykay"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-primary transition"
               >
-                <Instagram size={20} />
+                <Facebook size={20} />
               </a>
             </div>
           </div>

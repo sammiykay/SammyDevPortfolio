@@ -9,7 +9,7 @@ import Contact from "@/components/sections/Contact";
 
 const Home = () => {
   useEffect(() => {
-    document.title = "Kayode Ola - Software Engineer Portfolio";
+    document.title = "Oke Samson - Software Engineer Portfolio";
     
     // Scroll to hash location if URL has one on initial load
     if (window.location.hash) {
