@@ -1,7 +1,6 @@
 import nodemailer from 'nodemailer';
 import { ContactMessage } from '@shared/schema';
-import dotenv from 'dotenv';
-dotenv.config();
+
 interface EmailParams {
   to: string;
   from: string;
@@ -12,15 +11,13 @@ interface EmailParams {
 
 // Initialize the Nodemailer transporter
 function getTransporter() {
-  if (!process.env.EMAIL_USERNAME || !process.env.EMAIL_PASSWORD) {
-    throw new Error('EMAIL_USERNAME and EMAIL_PASSWORD are required for email functionality');
-  }
+  
 
   return nodemailer.createTransport({
     service: 'gmail', // or use "smtp.zoho.com", "smtp.mailtrap.io", etc.
     auth: {
-      user: process.env.EMAIL_USERNAME,
-      pass: process.env.EMAIL_PASSWORD,
+      user: "kayodeola47@gmail.com",
+      pass: "zdvlqmcndrbpfagv",
     },
   });
 }
@@ -53,7 +50,7 @@ export async function sendEmail(params: EmailParams): Promise<boolean> {
  */
 export async function sendContactNotification(contactMessage: ContactMessage): Promise<boolean> {
   const adminEmail = 'kayodeola47@gmail.com';
-  const senderEmail = process.env.EMAIL_USERNAME || 'kayodeola47@gmail.com'; // default fallback
+  const senderEmail = 'kayodeola47@gmail.com'; // default fallback
 
   const emailParams: EmailParams = {
     to: adminEmail,
