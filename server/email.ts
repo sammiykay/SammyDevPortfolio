@@ -1,19 +1,7 @@
-import { MailService } from '@sendgrid/mail';
+import nodemailer from 'nodemailer';
 import { ContactMessage } from '@shared/schema';
-
-// Initialize SendGrid with API key from environment variables
-const mailService = new MailService();
-
-// We'll set the API key at runtime to ensure it's available
-function getMailService() {
-  if (!process.env.SENDGRID_API_KEY) {
-    throw new Error('SENDGRID_API_KEY is required for email functionality');
-  }
-  
-  mailService.setApiKey(process.env.SENDGRID_API_KEY);
-  return mailService;
-}
-
+import dotenv from 'dotenv';
+dotenv.config();
 interface EmailParams {
   to: string;
   from: string;
@@ -22,25 +10,40 @@ interface EmailParams {
   html?: string;
 }
 
+// Initialize the Nodemailer transporter
+function getTransporter() {
+  if (!process.env.EMAIL_USERNAME || !process.env.EMAIL_PASSWORD) {
+    throw new Error('EMAIL_USERNAME and EMAIL_PASSWORD are required for email functionality');
+  }
+
+  return nodemailer.createTransport({
+    service: 'gmail', // or use "smtp.zoho.com", "smtp.mailtrap.io", etc.
+    auth: {
+      user: process.env.EMAIL_USERNAME,
+      pass: process.env.EMAIL_PASSWORD,
+    },
+  });
+}
+
 /**
- * Send an email notification using SendGrid
+ * Send an email using Nodemailer
  */
 export async function sendEmail(params: EmailParams): Promise<boolean> {
   try {
-    // Get the mail service with API key set
-    const service = getMailService();
-    
-    await service.send({
-      to: params.to,
+    const transporter = getTransporter();
+
+    await transporter.sendMail({
       from: params.from,
+      to: params.to,
       subject: params.subject,
       text: params.text,
       html: params.html,
     });
+
     console.log('Email sent successfully');
     return true;
   } catch (error) {
-    console.error('SendGrid email error:', error);
+    console.error('Nodemailer email error:', error);
     return false;
   }
 }
@@ -49,12 +52,9 @@ export async function sendEmail(params: EmailParams): Promise<boolean> {
  * Send notification email when a new contact form submission is received
  */
 export async function sendContactNotification(contactMessage: ContactMessage): Promise<boolean> {
-  const adminEmail = 'kayodeola47@gmail.com'; // Your email address
-  
-  // Define sender email - this should be a verified sender in SendGrid
-  // Using your own email for simplicity since it needs to be verified in SendGrid
-  const senderEmail = 'kayodeola47@gmail.com'; 
-  
+  const adminEmail = 'kayodeola47@gmail.com';
+  const senderEmail = process.env.EMAIL_USERNAME || 'kayodeola47@gmail.com'; // default fallback
+
   const emailParams: EmailParams = {
     to: adminEmail,
     from: senderEmail,

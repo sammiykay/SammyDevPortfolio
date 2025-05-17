@@ -76,8 +76,8 @@ const Navbar = () => {
           }}
           className="text-2xl font-bold"
         >
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">Kayode</span>
-          <span className="text-foreground">.dev</span>
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">Sammiy</span>
+          <span className="text-foreground">kay</span>
         </motion.a>
 
         <div className="hidden md:flex space-x-1">

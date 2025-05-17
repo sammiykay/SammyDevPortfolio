@@ -42,6 +42,12 @@ const Resume = () => {
       company: "Bezal",
       period: "2023-Present",
       description: "Worked on creating a seamless landing page and an e-learning system."
+    },
+    {
+      title: "Blockchain Dev",
+      company: "Clusteer",
+      period: "2025-Present",
+      description: "design and implement secure multi-chain wallet systems, generate addresses for various networks, manage the addresses"
     }
   ];
 
@@ -56,11 +62,11 @@ const Resume = () => {
   const additionalSkills = [
     {
       category: "Frontend",
-      skills: ["React", "Vue", "Bootstrap", "Tailwind"]
+      skills: ["HTML", "CSS", "React", "Bootstrap", "Tailwind"]
     },
     {
       category: "Backend",
-      skills: ["Django", "Flask", "Node.js", "SQL"]
+      skills: ["Django", "Flask", "Python"]
     }
   ];
 

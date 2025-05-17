@@ -2,6 +2,12 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ProjectCard } from "@/components/ui/ProjectCard";
 import { ArrowRight } from "lucide-react";
+const department = "./src/assets/department.png";
+const bezal_ = "./src/assets/bezal_.png";
+const odoo = "./src/assets/odoo.png";
+const tailor = "./src/assets/tailor.png";
+const auction = "./src/assets/auction.png";
+const executivehaven = "./src/assets/executivehaven.png";
 
 const Portfolio = () => {
   const fadeIn = {
@@ -28,44 +34,44 @@ const Portfolio = () => {
     {
       title: "Helpdesk Ticketing System",
       category: "Web Application",
-      image: "https://images.unsplash.com/photo-1573164574472-797cdf4a583a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500",
-      technologies: ["React", "Django", "SQL"],
-      link: "#"
+      image: odoo,
+      technologies: ["Odoo", "Python", "XML"],
+      link: "https://odoo.oilservgroup.systems/"
     },
     {
       title: "Bezal Global",
       category: "Web Application",
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500",
-      technologies: ["HTML", "CSS", "JavaScript"],
-      link: "#"
+      image: bezal_,
+      technologies: ["HTML", "CSS", "JavaScript", 'Django'],
+      link: "bezalglobal.pythonanywhere.com"
     },
     {
       title: "ExecutiveHaven",
       category: "Web Application",
-      image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500",
-      technologies: ["React", "Django", "PostgreSQL"],
-      link: "#"
+      image: executivehaven,
+      technologies: ["React", "Django", "Django Rest Framework"],
+      link: "https://executivehaven.org"
     },
-    {
-      title: "Youtube Playlist Downloader",
-      category: "Windows Application",
-      image: "https://images.unsplash.com/photo-1611162616475-46b635cb6868?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500",
-      technologies: ["Python", "Tkinter", "YouTube API"],
-      link: "#"
-    },
+    // {
+    //   title: "Youtube Playlist Downloader",
+    //   category: "Windows Application",
+    //   image: "https://images.unsplash.com/photo-1611162616475-46b635cb6868?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500",
+    //   technologies: ["Python", "Tkinter", "YouTube API"],
+    //   link: "#"
+    // },
     {
       title: "Tailored Cloth Store",
       category: "Web Application",
-      image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500",
-      technologies: ["React", "Node.js", "MongoDB"],
-      link: "#"
+      image: tailor,
+      technologies: ["HTML", "CSS", "Django"],
+      link: "https://github.com/sammiykay/cloth_store"
     },
     {
-      title: "Crypto Trading Bot",
+      title: "Department Due Payment",
       category: "Web Application",
-      image: "https://images.unsplash.com/photo-1639322537228-f710d846310a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500",
-      technologies: ["Python", "Flask", "Trading APIs"],
-      link: "#"
+      image: department,
+      technologies: ["Python", "Django", "HTML & CSS", "Flutterwave"],
+      link: "https://github.com/sammiykay/department_due/"
     }
   ];
 
@@ -113,14 +119,7 @@ const Portfolio = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-          <Button 
-            variant="outline" 
-            size="lg" 
-            className="rounded-full border-primary text-primary hover:bg-primary hover:text-white"
-          >
-            View All Projects
-            <ArrowRight className="ml-2 h-4 w-4" />
-          </Button>
+         
         </motion.div>
       </div>
     </section>

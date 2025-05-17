@@ -64,7 +64,7 @@ const Hero = () => {
               variants={fadeInUp} 
               className="text-4xl md:text-5xl lg:text-6xl font-bold mt-4 mb-5 tracking-tight"
             >
-              Hi, I'm <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">Kayode Ola</span>
+              Hi, I'm <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">Oke Samson</span>
             </motion.h1>
             
             <motion.p variants={fadeInUp} className="text-lg text-muted-foreground mb-6 max-w-lg">
@@ -151,7 +151,7 @@ const Hero = () => {
               <div className="relative overflow-hidden rounded-3xl border border-primary/10 shadow-2xl">
                 <img
                   src={profileImg}
-                  alt="Kayode Ola - Software Engineer"
+                  alt="Oke Samson - Software Engineer"
                   className="w-full h-auto object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-20"></div>

@@ -1,9 +1,11 @@
-import { useState } from "react";
+import React, { useState } from "react";
+
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { apiRequest } from "@/lib/queryClient";
+// import ReCAPTCHA from 'react-google-recaptcha';
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,10 +20,14 @@ import {
   Github, 
   Linkedin, 
   Twitter, 
-  Instagram, 
+  Facebook, 
   Loader2, 
   CheckCircle2 
 } from "lucide-react";
+
+
+
+
 
 const formSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -33,6 +39,9 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 const Contact = () => {
+  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
+
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const { toast } = useToast();
@@ -50,9 +59,19 @@ const Contact = () => {
   const onSubmit = async (data: FormValues) => {
     setIsSubmitting(true);
     setIsSuccess(false);
-    
+  //   if (!recaptchaToken) {
+  //   toast({
+  //     title: "reCAPTCHA failed",
+  //     description: "Please confirm you're not a robot.",
+  //     variant: "destructive",
+  //   });
+  //   return;
+  // }
     try {
-      await apiRequest("POST", "/api/contact", data);
+      await apiRequest("POST", "/api/contact", {
+      ...data,
+      // recaptchaToken
+    });
       
       toast({
         title: "Message sent successfully!",
@@ -93,11 +112,12 @@ const Contact = () => {
   ];
 
   const socialLinks = [
-    { icon: <Github size={18} />, url: "https://github.com/", label: "GitHub" },
-    { icon: <Linkedin size={18} />, url: "https://linkedin.com/", label: "LinkedIn" },
-    { icon: <Twitter size={18} />, url: "https://twitter.com/", label: "Twitter" },
-    { icon: <Instagram size={18} />, url: "https://instagram.com/", label: "Instagram" }
+    { icon: <Github size={18} />, url: "https://github.com/sammiykay", label: "GitHub" },
+    { icon: <Linkedin size={18} />, url: "https://linkedin.com/in/oke-samson/", label: "LinkedIn" },
+    { icon: <Twitter size={18} />, url: "https://twitter.com/sammiykay", label: "Twitter" },
+    { icon: <Facebook size={18} />, url: "https://facebook.com/@sammiykay", label: "Facebook" }
   ];
+  
 
   return (
     <section id="contact" className="py-20 bg-gradient-to-b from-secondary/20 to-background">
@@ -269,7 +289,12 @@ const Contact = () => {
                       </FormItem>
                     )}
                   />
-                  
+                  {/* <ReCAPTCHA
+                  sitekey="6LdDyT0rAAAAAO0qyt4eyrszKBond9BZJsrj2Smc" // or hardcode for now
+                  onChange={(token: string | null) => setRecaptchaToken(token)}
+                  className="mt-4"
+                /> */}
+
                   <div className="pt-2">
                     <Button 
                       type="submit" 
