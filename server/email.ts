@@ -49,11 +49,15 @@ export async function sendEmail(params: EmailParams): Promise<boolean> {
  * Send notification email when a new contact form submission is received
  */
 export async function sendContactNotification(contactMessage: ContactMessage): Promise<boolean> {
-  const adminEmail = 'kayodeola47@gmail.com'; // Replace with your email
+  const adminEmail = 'kayodeola47@gmail.com'; // Your email address
+  
+  // Define sender email - this should be a verified sender in SendGrid
+  // Using your own email for simplicity since it needs to be verified in SendGrid
+  const senderEmail = 'kayodeola47@gmail.com'; 
   
   const emailParams: EmailParams = {
     to: adminEmail,
-    from: 'noreply@portfolio.com', // This should be a verified sender in SendGrid
+    from: senderEmail,
     subject: `New Contact Form Submission from ${contactMessage.name}`,
     html: `
       <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">

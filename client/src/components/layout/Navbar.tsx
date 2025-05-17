@@ -1,14 +1,29 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Code, Home, Briefcase, Layout, Mail } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
+  const [isScrolled, setIsScrolled] = useState(false);
   const [, setLocation] = useLocation();
+
+  // Define section icons
+  const sectionIcons = {
+    home: <Home size={16} />,
+    services: <Layout size={16} />,
+    resume: <Briefcase size={16} />,
+    portfolio: <Code size={16} />,
+    contact: <Mail size={16} />
+  };
 
   useEffect(() => {
     const handleScroll = () => {
+      // Update navbar style on scroll
+      setIsScrolled(window.scrollY > 20);
+      
+      // Track active section
       const sections = document.querySelectorAll("section[id]");
       const scrollPosition = window.scrollY + 100; // Offset for navbar height
 
@@ -42,68 +57,101 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="fixed w-full bg-white/90 backdrop-blur-sm shadow-sm z-50">
-      <div className="container mx-auto py-3 flex justify-between items-center">
-        <a
+    <nav 
+      className={`fixed w-full backdrop-blur-md z-50 transition-all duration-300 ${
+        isScrolled 
+          ? "py-3 bg-background/90 shadow-lg" 
+          : "py-5 bg-transparent"
+      }`}
+    >
+      <div className="container mx-auto flex justify-between items-center">
+        <motion.a
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
           href="#home"
           onClick={(e) => {
             e.preventDefault();
             scrollToSection("home");
           }}
-          className="text-2xl font-bold text-primary"
+          className="text-2xl font-bold"
         >
-          Kayode<span className="text-gray-900">.dev</span>
-        </a>
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">Kayode</span>
+          <span className="text-foreground">.dev</span>
+        </motion.a>
 
-        <div className="hidden md:flex space-x-8">
+        <div className="hidden md:flex space-x-1">
           {["home", "services", "resume", "portfolio", "contact"].map(
-            (section) => (
-              <a
+            (section, index) => (
+              <motion.a
                 key={section}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
                 href={`#${section}`}
                 onClick={(e) => {
                   e.preventDefault();
                   scrollToSection(section);
                 }}
-                className={`nav-link ${
-                  activeSection === section ? "active" : ""
+                className={`flex items-center px-4 py-2 mx-1 rounded-lg transition-all ${
+                  activeSection === section 
+                    ? "bg-primary/10 text-primary font-medium" 
+                    : "hover:bg-secondary text-foreground hover:text-primary"
                 }`}
               >
+                <span className="mr-2">{sectionIcons[section as keyof typeof sectionIcons]}</span>
                 {section.charAt(0).toUpperCase() + section.slice(1)}
-              </a>
+              </motion.a>
             )
           )}
         </div>
 
-        <button
-          className="md:hidden text-gray-900 focus:outline-none"
+        <motion.button
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="md:hidden w-10 h-10 flex items-center justify-center rounded-lg bg-primary/10 text-primary"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
         >
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+          {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+        </motion.button>
       </div>
 
-      {isMenuOpen && (
-        <div className="md:hidden bg-white shadow-md absolute w-full">
-          <div className="container mx-auto py-2 flex flex-col space-y-3">
-            {["home", "services", "resume", "portfolio", "contact"].map(
-              (section) => (
-                <a
-                  key={section}
-                  href={`#${section}`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection(section);
-                  }}
-                  className="block py-2 hover:text-primary transition"
-                >
-                  {section.charAt(0).toUpperCase() + section.slice(1)}
-                </a>
-              )
-            )}
-          </div>
-        </div>
-      )}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+            className="md:hidden bg-background/95 backdrop-blur-md shadow-lg absolute w-full overflow-hidden"
+          >
+            <div className="container mx-auto py-4 flex flex-col space-y-2">
+              {["home", "services", "resume", "portfolio", "contact"].map(
+                (section) => (
+                  <a
+                    key={section}
+                    href={`#${section}`}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      scrollToSection(section);
+                    }}
+                    className={`flex items-center px-4 py-3 rounded-lg ${
+                      activeSection === section 
+                        ? "bg-primary/10 text-primary font-medium" 
+                        : "hover:bg-secondary text-foreground"
+                    }`}
+                  >
+                    <span className="mr-3">{sectionIcons[section as keyof typeof sectionIcons]}</span>
+                    {section.charAt(0).toUpperCase() + section.slice(1)}
+                  </a>
+                )
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 };
