@@ -2,6 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertContactMessageSchema } from "@shared/schema";
+import { sendContactNotification } from "./email";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Contact form submission endpoint
@@ -19,6 +20,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Save the contact message
       const savedMessage = await storage.createContactMessage(parseResult.data);
+      
+      // Send email notification
+      if (process.env.SENDGRID_API_KEY) {
+        try {
+          await sendContactNotification(savedMessage);
+          console.log("Email notification sent successfully");
+        } catch (emailError) {
+          console.error("Failed to send email notification:", emailError);
+          // Continue with the response even if email fails
+        }
+      } else {
+        console.warn("SENDGRID_API_KEY not set. Email notification not sent.");
+      }
       
       // Send successful response
       return res.status(200).json({
